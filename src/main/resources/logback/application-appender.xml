@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 애플리케이션 전체 로그 -->
+<appender name="APPLICATION" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_PATH}coreapp.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+        <fileNamePattern>${LOG_PATH}backup/coreapp-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern> <!-- rollover daily -->
+        <maxHistory>3</maxHistory>
+        <maxFileSize>100MB</maxFileSize>
+    </rollingPolicy>
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        <includeContext>true</includeContext>
+        <includeCallerData>true</includeCallerData>
+        <includeMdc>true</includeMdc>
+        <timestampPattern>yyyy-MM-dd HH:mm:ss.SSS</timestampPattern>
+        <fieldNames>
+            <timestamp>timestamp</timestamp>
+            <thread>thread</thread>
+            <message>message</message>
+            <stackTrace>exception</stackTrace>
+            <mdc>context</mdc>
+        </fieldNames>
+    </encoder>
+</appender>

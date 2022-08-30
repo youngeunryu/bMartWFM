@@ -1,0 +1,19 @@
+spring:
+  flyway:
+    enabled: false
+  jpa:
+    open-in-view: false
+    properties:
+      org:
+        hibernate:
+          envers:
+            revision_type_field_name: revision_type
+            audit_table_suffix: _audit
+            store_data_at_delete: true
+            revision_field_name: revision
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health

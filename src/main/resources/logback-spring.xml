@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <property name="FILE_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %X{transactionId} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <springProfile name="default">
+        <logger name="org.springframework.web" level="DEBUG"/>
+        <logger name="org.springframework.web.servlet.handler" level="INFO"/>
+
+        <logger name="org.hibernate.SQL" level="DEBUG"/>
+        <logger name="org.hibernate.type" level="DEBUG"/>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="local">
+        <property name="LOG_PATH" value="log/"/>
+        <include resource="logback/application-appender.xml"/>
+        <include resource="logback/error-appender.xml"/>
+
+        <logger name="org.springframework.web" level="DEBUG"/>
+        <logger name="org.springframework.web.servlet.handler" level="INFO"/>
+
+        <logger name="org.hibernate.SQL" level="DEBUG"/>
+        <logger name="org.hibernate.type" level="DEBUG"/>
+
+        <root level="INFO">
+            <appender-ref ref="APPLICATION"/>
+            <appender-ref ref="ERROR"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="beta,prod">
+        <property name="LOG_PATH" value="woowa/logs/spring/"/>
+        <include resource="logback/application-appender.xml"/>
+        <include resource="logback/error-appender.xml"/>
+
+        <logger name="org.springframework.web" level="INFO"/>
+        <root level="INFO">
+            <appender-ref ref="APPLICATION"/>
+            <appender-ref ref="ERROR"/>
+        </root>
+    </springProfile>
+</configuration>
